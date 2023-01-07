@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
 homeController = require('./controllers/homeController');
-loginController = require('./controllers/loginController');
+authController = require('./controllers/authController');
 
 router.use(homeController);
-router.use(loginController);
+router.use(authController);
 
 
 module.exports = router;
