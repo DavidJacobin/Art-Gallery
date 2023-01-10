@@ -5,33 +5,35 @@ const jwt = require('jsonwebtoken');
 
 exports.create = (userData) => User.create(userData);
 
-exports.login = async (user, password) => {
-    const username = await User.findOne(user);
+exports.login = async (username, password) => {
+    const user = await User.findOne({ username });
 
-    if(!user){
-        throw {message: 'Can not find username or password!'}
+    if (!user) {
+        throw { message: 'Can not find username or password!' }
     }
 
     const isvalid = bcrypt.compare(password, user.password)
 
-    if(!isvalid){
-        throw {message: 'Can not find username or password!'} 
+    if (!isvalid) {
+        throw { message: 'Can not find username or password!' }
     }
+
+    return user;
 
 };
 
-exports.createToken = (user) =>{
-    const payload = {_id: user._id, username: user.username, address: user.address}
+exports.createToken = (user) => {
+    const payload = { _id: user._id, username: user.username, address: user.address }
 
-    const tokenPromise = new Promise((resolve, reject) =>{
-        jwt.sign(payload, 'g2734t3eghe8293e', {expiresIn: '2d'}, (err, decToken) =>{
-            if(err){
+    const tokenPromise = new Promise((resolve, reject) => {
+        jwt.sign(payload, 'g2734t3eghe8293e', { expiresIn: '2d' }, (err, decToken) => {
+            if (err) {
                 return reject(err);
             }
-            resolve(decToken); 
+            resolve(decToken);
         })
 
     })
 
-    return tokenPromise;
+    return tokenPromise
 };

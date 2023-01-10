@@ -9,7 +9,7 @@ router.post('/login', async(req, res) => {
     const {username, password} = req.body;
 
     const user = await authService.login(username, password);
-    const token = await authService.create(user);
+    const token = await authService.createToken(user);
 
     res.cookie('user', token);
     res.redirect('/');
@@ -29,12 +29,20 @@ router.post('/register', async (req,res) => {
     try {
         
         const createUser = await authService.create({username,password,address});
-        res.redirect('/login')
+        const token = await authService.createToken(createUser);
+
+        res.cookie('user', token);
+        res.redirect('/')
     } catch (error) {
         return res.render('auth/register', {error})
     }
 
     res.end();
+});
+
+router.get('/logout', (req, res) =>{
+    res.clearCookie('user');
+    res.redirect('/');
 });
 
 
