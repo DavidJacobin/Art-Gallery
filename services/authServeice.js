@@ -18,10 +18,12 @@ exports.login = async (user, password) => {
         throw {message: 'Can not find username or password!'} 
     }
 
+};
 
+exports.createToken = (user) =>{
     const payload = {_id: user._id, username: user.username, address: user.address}
 
-    const promise = new Promise((resolve, reject) =>{
+    const tokenPromise = new Promise((resolve, reject) =>{
         jwt.sign(payload, 'g2734t3eghe8293e', {expiresIn: '2d'}, (err, decToken) =>{
             if(err){
                 return reject(err);
@@ -31,5 +33,5 @@ exports.login = async (user, password) => {
 
     })
 
-    return promise;
+    return tokenPromise;
 };
