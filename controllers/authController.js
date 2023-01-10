@@ -9,8 +9,13 @@ router.get('/register', (req,res) => {
 });
 
 router.post('/register', (req,res) => {
-    console.log(req.body);
-    res.end()
+    const {username, password, repassword} = req.body;
+
+    if(password !== repassword){
+        return res.render('auth/register', {error: "Passwords do not match!"})
+    }
+
+    res.end();
 });
 
 
