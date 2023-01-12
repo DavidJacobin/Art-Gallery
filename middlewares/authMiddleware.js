@@ -31,3 +31,13 @@ exports.isAuth = (req, res, next) => {
 
     next();
 };
+
+exports.isGuset = (req, res, next) => {
+
+    if(req.user){
+        return res.redirect('/');
+    }
+
+    next();
+};
+

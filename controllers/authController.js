@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const authService = require('../services/authServeice');
-const { isAuth} = require('../middlewares/authMiddleware')
+const { isAuth, isGuset} = require('../middlewares/authMiddleware')
 
 router.get('/login', (req,res) => {
     res.render('auth/login');
 });
 
-router.post('/login', async(req, res) => {
+router.post('/login',isGuset, async(req, res) => {
     const {username, password} = req.body;
 
     const user = await authService.login(username, password);
@@ -16,11 +16,11 @@ router.post('/login', async(req, res) => {
     res.redirect('/');
 });
 
-router.get('/register', (req,res) => {
+router.get('/register',isGuset, (req,res) => {
     res.render('auth/register');
 });
 
-router.post('/register', async (req,res) => {
+router.post('/register',isGuset,  async (req,res) => {
     const {username, password, repassword, address} = req.body;
 
     if(password !== repassword){
