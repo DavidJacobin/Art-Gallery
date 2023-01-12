@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes')
 const { dbInit } = require('./config/dbinit')
 const { auth } = require('./middlewares/authMiddleware')
+const {errorHandler} = require('./middlewares/errorHandlerMiddleware')
 
 
 
@@ -21,6 +22,7 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(auth);
 app.use(routes);
+app.use(errorHandler)
 
 
 dbInit();
