@@ -1,8 +1,9 @@
 const express = require('express');
 const hbs = require('express-handlebars');
+const cookieParser = require('cookie-parser');
+
 const routes = require('./routes')
 const { dbInit } = require('./config/dbinit')
-const cookieParser = require('cookie-parser');
 const { auth } = require('./middlewares/authMiddleware')
 
 
