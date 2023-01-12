@@ -11,7 +11,7 @@ router.post('/login', async(req, res) => {
     const user = await authService.login(username, password);
     const token = await authService.createToken(user);
 
-    res.cookie('user', token);
+    res.cookie('user', token, {httpOnly: true});
     res.redirect('/');
 });
 
@@ -31,7 +31,7 @@ router.post('/register', async (req,res) => {
         const createUser = await authService.create({username,password,address});
         const token = await authService.createToken(createUser);
 
-        res.cookie('user', token);
+        res.cookie('user', token, {httpOnly: true});
         res.redirect('/')
     } catch (error) {
         return res.render('auth/register', {error})
