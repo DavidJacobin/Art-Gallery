@@ -5,8 +5,9 @@ const publicationService = require('../services/publicationService');
 
 router.get('/details/:id', async (req, res) => {
     const publication = await publicationService.getOneDetailed(req.params.id).lean();
+    const isAuthor = publication.author._id == req.user?._id
 
-    res.render('publications/details', { ...publication })
+    res.render('publications/details', { ...publication, isAuthor })
 });
 
 router.get('/create', isAuth, (req, res) => {
