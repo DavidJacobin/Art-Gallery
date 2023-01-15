@@ -5,7 +5,7 @@ const publicationService = require('../services/publicationService');
 
 
 router.get('/create',isAuth , (req , res) =>{
-    res.render('publication/create')
+    res.render('publications/create')
 });
 
 router.post('/create',isAuth ,async (req , res) =>{
