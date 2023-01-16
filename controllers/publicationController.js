@@ -10,6 +10,18 @@ router.get('/details/:id', async (req, res) => {
     res.render('publications/details', { ...publication, isAuthor })
 });
 
+router.get('/edit/:id', async (req, res) => {
+    const publication = await publicationService.getOne(req.params.id).lean();
+
+    res.render('publications/edit', { ...publication })
+});
+
+router.post('/edit/:id', isAuth, async (req, res) => {
+    await publicationService.update( req.params.id, req.body);
+
+    res.redirect(`/details/${req.params.id}`)
+});
+
 router.get('/create', isAuth, (req, res) => {
     res.render('publications/create')
 });
