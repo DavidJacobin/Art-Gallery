@@ -22,6 +22,12 @@ router.post('/edit/:id', isAuth, async (req, res) => {
     res.redirect(`/details/${req.params.id}`)
 });
 
+router.get('/delete/:id', isAuth, async (req, res) => {
+    await publicationService.delete( req.params.id);
+
+    res.redirect('/gallery')
+});
+
 router.get('/create', isAuth, (req, res) => {
     res.render('publications/create')
 });
